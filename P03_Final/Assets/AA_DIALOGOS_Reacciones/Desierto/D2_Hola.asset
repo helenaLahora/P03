@@ -9,8 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a62e73ab88505e4e87524693d19a3d5, type: 3}
-  m_Name: N1_Start
+  m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
+  m_Name: D2_Hola
   m_EditorClassIdentifier: 
-  Name: MOAI N.
-  StartNode: {fileID: 11400000, guid: 6bb9860c091b3e44e88ba85109de335b, type: 2}
+  Speech: 
+  Options:
+  - Text: 
+    animationClip:
+      clip: {fileID: 0}
+    NextNode: {fileID: 0}
+  - Text: 
+    animationClip:
+      clip: {fileID: 0}
+    NextNode: {fileID: 0}
