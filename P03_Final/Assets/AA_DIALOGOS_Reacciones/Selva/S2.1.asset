@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
+  m_Name: S2.1
+  m_EditorClassIdentifier: 
+  Speech: "Jajaja, tienes raz\xF3n. Bueno, me encantar\xEDa seguir hablando contigo
+    pero tengo cosas que hacer, saluda a los dem\xE1s Moais de mi parte. "
+  Options:
+  - Text: "\xFA eres el \xFAltimo as\xED que\u2026 va a ser que no. "
+    animationClip:
+      clip: {fileID: 0}
+    NextNode: {fileID: 0}
+  - Text: 'Claro sin problemas. '
+    animationClip:
+      clip: {fileID: 0}
+    NextNode: {fileID: 0}
