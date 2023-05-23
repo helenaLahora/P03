@@ -70,7 +70,6 @@ public class DialogueManager : MonoBehaviour
         SerializedAnimationClip serializedClip = _currentNode.Options[number].animationClip;
         AnimationClip animationClip = serializedClip.clip;
 
-
         if (animationClip != null)
         {
             _talker.GetComponent<Animator>().Play(animationClip.name);

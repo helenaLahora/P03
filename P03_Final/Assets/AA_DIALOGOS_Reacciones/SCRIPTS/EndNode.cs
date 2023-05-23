@@ -8,6 +8,6 @@ public class EndNode : DialogueNode //fiquem d'herencia a dialoguenode pq el end
 {
     public void EndAction(GameObject talker)
     {
-        Debug.Log("Callate la boca tontoelculo");
+        Debug.Log("Adios adios.");
     }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
+  m_Name: N2_Hola
+  m_EditorClassIdentifier: 
+  Speech: "Vaya, me has encontrado, debe haber sido f\xE1cil, no he puesto mucho
+    esfuerzo en esconderme pero no creo que te resulte igual de sencillo encontrar
+    los dem\xE1s Budas/Moais"
+  Options:
+  - Text: "Ya los he encontrado. Tu eres el \xFAltimo. Por cierto, el Moai de la
+      selva te manda saludos. "
+    animationClip:
+      clip: {fileID: 0}
+    NextNode: {fileID: 11400000, guid: 1be367b586a432e408b7687b861fc747, type: 2}
+  - Text: 'Eso ya lo veremos. '
+    animationClip:
+      clip: {fileID: 7400000, guid: 1aea815d6fd793449af6abe3ee635269, type: 2}
+    NextNode: {fileID: 11400000, guid: 762a38aebddb5094d8724379eb20ab53, type: 2}

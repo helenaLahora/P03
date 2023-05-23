@@ -17,9 +17,9 @@ MonoBehaviour:
   Options:
   - Text: "\xFA eres el \xFAltimo as\xED que\u2026 va a ser que no. "
     animationClip:
-      clip: {fileID: 0}
-    NextNode: {fileID: 0}
+      clip: {fileID: 7400000, guid: 489a10c0d92dfda4e99885dae47950d1, type: 2}
+    NextNode: {fileID: 11400000, guid: 55cc601ccb43fc743bbab0e91cee1157, type: 2}
   - Text: 'Claro sin problemas. '
     animationClip:
-      clip: {fileID: 0}
-    NextNode: {fileID: 0}
+      clip: {fileID: 7400000, guid: a1c1df03a6ef3284fbc5344e9fb7bb8a, type: 2}
+    NextNode: {fileID: 11400000, guid: fe52ddd045c15c548b0d1b7f1e28ad58, type: 2}
