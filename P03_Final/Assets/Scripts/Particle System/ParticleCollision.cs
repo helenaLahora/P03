@@ -4,34 +4,60 @@ using UnityEngine;
 
 public class ParticleCollision : MonoBehaviour
 {
-    public ParticleSystem part;
-    public List<ParticleCollisionEvent> collisionEvents;
+    public Collider playerCollider;    // Referencia al Collider del jugador
+    public Material wetMaterial;       // Material "mojado" para asignar al jugador
+    private Material originalMaterial; // Material original del jugador
+    private bool isWet = false;        // Indicador de si el jugador está mojado
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        part = GetComponent<ParticleSystem>();
-        collisionEvents = new List<ParticleCollisionEvent>();
+        // Guardar el material original del jugador
+        MeshRenderer playerRenderer = playerCollider.GetComponent<MeshRenderer>();
+        if (playerRenderer != null)
+        {
+            originalMaterial = playerRenderer.material;
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
+        }
     }
 
-    // Update is called once per frame
     private void OnParticleCollision(GameObject other)
     {
-        int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
-
-        Rigidbody rb = other.GetComponent<Rigidbody>();
-        int i = 0;
-
-        while (i < numCollisionEvents)
+        if (other.gameObject.CompareTag("bonk") && !isWet)
         {
-            if (rb != null)
-            {
-                Vector3 pos = collisionEvents[i].intersection;
-                Vector3 force = collisionEvents[i].velocity * 10;
-                rb.AddForce(force);
-            }
+            Debug.Log("Colisión con lluvia detectada en el jugador.");
 
-            i++;
+            // Cambiar el material del jugador al material "mojado"
+            ChangePlayerMaterial(wetMaterial);
+            isWet = true;
+
+            // Iniciar la corutina para desvanecer el efecto de mojado después de 5 segundos
+            StartCoroutine(FadeWetEffect());
         }
+    }
+
+    private void ChangePlayerMaterial(Material newMaterial)
+    {
+        MeshRenderer playerRenderer = playerCollider.GetComponent<MeshRenderer>();
+        if (playerRenderer != null)
+        {
+            playerRenderer.material = newMaterial;
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
+        }
+    }
+
+    private System.Collections.IEnumerator FadeWetEffect()
+    {
+        // Esperar 5 segundos
+        yield return new WaitForSeconds(5f);
+
+        // Cambiar el material del jugador de vuelta al material original
+        ChangePlayerMaterial(originalMaterial);
+        isWet = false;
     }
 }
