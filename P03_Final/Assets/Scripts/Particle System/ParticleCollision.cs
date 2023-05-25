@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ParticleCollision : MonoBehaviour
 {
-    public Collider playerCollider;    // Referencia al Collider del jugador
     public Material wetMaterial;       // Material "mojado" para asignar al jugador
     private Material originalMaterial; // Material original del jugador
     private bool isWet = false;        // Indicador de si el jugador está mojado
@@ -12,22 +11,22 @@ public class ParticleCollision : MonoBehaviour
     private void Start()
     {
         // Guardar el material original del jugador
-        MeshRenderer playerRenderer = playerCollider.GetComponent<MeshRenderer>();
-        if (playerRenderer != null)
+        Renderer groundRenderer = GetComponent<Renderer>();
+        if (groundRenderer != null)
         {
-            originalMaterial = playerRenderer.material;
+            originalMaterial = groundRenderer.material;
         }
         else
         {
-            Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
+            //Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
         }
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        if (other.gameObject.CompareTag("bonk") && !isWet)
+        if ( !isWet)
         {
-            Debug.Log("Colisión con lluvia detectada en el jugador.");
+            //Debug.Log("Colisión con lluvia detectada en el jugador.");
 
             // Cambiar el material del jugador al material "mojado"
             ChangePlayerMaterial(wetMaterial);
@@ -40,14 +39,14 @@ public class ParticleCollision : MonoBehaviour
 
     private void ChangePlayerMaterial(Material newMaterial)
     {
-        MeshRenderer playerRenderer = playerCollider.GetComponent<MeshRenderer>();
-        if (playerRenderer != null)
+        Renderer groundRenderer = GetComponent<Renderer>();
+        if (groundRenderer != null)
         {
-            playerRenderer.material = newMaterial;
+            groundRenderer.material = newMaterial;
         }
         else
         {
-            Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
+            //Debug.LogError("No se encontró el componente MeshRenderer en el jugador.");
         }
     }
 
