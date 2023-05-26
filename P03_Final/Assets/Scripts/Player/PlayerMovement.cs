@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float Controles_H;
     public float Controles_V;
-    public bool Controles_J;
+    public bool Controles_J = false;
 
     private Coroutine speedBoostCoroutine; // Referencia al coroutine de aumento de velocidad
     private float baseSpeed; // Velocidad base del jugador
@@ -40,7 +40,13 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(Cc.isGrounded);
         
         Movement();
-        Salto(Controles_J);
+
+        if (Jump(Controles_J))
+        {
+            Salto();
+        }
+        Debug.Log(Cc.isGrounded);
+
         
 
         //Debug.Log(EventHandler.Variables[Variable.collectedObjects]);
@@ -52,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate() // Es fa desprès del Update (és una acció que es realitza just desprès del Update normal)
     {
+        if(Cc.isGrounded && Controles_J)
         Controles_J = false; // Li dius que no li estas donant a la tecla espai, que constantment està en FALSE fins que prems la tecla space i es posa TRUE
     }
 
@@ -100,21 +107,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    public void OnJump() 
-    { 
+    public void OnJump()
+    {
         Controles_J = true;
-        Salto(Controles_J);
+        Jump(Controles_J);
+    }
+
+    public bool Jump(bool Controles_J) 
+    { 
+        return Controles_J && Cc.isGrounded;
 
     }
 
 
-    public void Salto(bool Controles_J)
+    public void Salto()
     {
-        if (Cc.isGrounded)
-        {
-            verticalSpeed += JumpForce;
-        }
+        verticalSpeed += JumpForce;
+   
     }
 
 
