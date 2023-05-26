@@ -16,10 +16,10 @@ MonoBehaviour:
     visitas, de haberlo sabido habr\xEDa arreglado algo m\xE1s mi \u201Cjard\xEDn\u201D. "
   Options:
   - Text: 'No hay problema. Da ambiente. '
-    animationClip:
-      clip: {fileID: 7400000, guid: 9e5d0b0a4e515ab4ba5808a6d8087bff, type: 2}
     NextNode: {fileID: 11400000, guid: 1eefc7c70873d3748a57dfe76102ae90, type: 2}
-  - Text: "Pues la verdad es que le podrias haber dado una podada, est\xE1 algo \u201Casalvajado\u201D. "
     animationClip:
       clip: {fileID: 7400000, guid: 9e5d0b0a4e515ab4ba5808a6d8087bff, type: 2}
-    NextNode: {fileID: 11400000, guid: aa0396024ea789b4fb1e6b2e26ceb533, type: 2}
+  - Text: "Pues la verdad es que le podrias haber dado una podada, est\xE1 algo \u201Casalvajado\u201D. "
+    NextNode: {fileID: 11400000, guid: 5e8be3dd119a84742978ea1ed4e61960, type: 2}
+    animationClip:
+      clip: {fileID: 7400000, guid: 9e5d0b0a4e515ab4ba5808a6d8087bff, type: 2}

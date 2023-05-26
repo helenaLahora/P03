@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eeb21c6031f6314e8882d40ca2efaac, type: 3}
-  m_Name: S2.1.2_HappyEND
+  m_Name: D2.1_END
   m_EditorClassIdentifier: 
-  Speech: "\xA1Genial! Muchas gracias, la verdad es que me haces un favor. Que tengas
-    un buen viaje."
+  Speech: "As\xED que sigue con vida. Pens\xE9 que hab\xEDa desaparecido entre los
+    hierbajos que llama \u201Cjard\xEDn\u201D. En fin, ha sido un placer, ya puedes
+    irte por donde has venido majo/a."
   Options: []

@@ -13,8 +13,9 @@ public class DialogueNode : ScriptableObject
 public class DialogueOptions
 {
     public string Text;
-    public SerializedAnimationClip animationClip; // Usamos SerializedAnimationClip en lugar de AnimationClip
     public DialogueNode NextNode;
+    public SerializedAnimationClip animationClip; 
+    
 }
 
 [System.Serializable]
