@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eeb21c6031f6314e8882d40ca2efaac, type: 3}
-  m_Name: D2.2_END
+  m_Name: ENDING
   m_EditorClassIdentifier: 
-  Speech: "No hace falta majo/a. Estoy f\xF3sil pero todav\xEDa no alucino. Bueno,
-    ya puedes irte no tengo nada m\xE1s que decirte (a la que le toca hacer los di\xE1logos
-    se le est\xE1n acabando las ideas). "
+  Speech: 
   Options: []

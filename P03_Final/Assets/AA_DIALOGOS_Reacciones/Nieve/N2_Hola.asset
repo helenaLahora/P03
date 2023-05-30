@@ -18,7 +18,7 @@ MonoBehaviour:
   Options:
   - Text: "Ya los he encontrado. Tu eres el \xFAltimo. Por cierto, el Moai de la
       selva te manda saludos. "
-    NextNode: {fileID: 11400000, guid: fdccbeaae17713d4eb3630c88d6ea3bf, type: 2}
+    NextNode: {fileID: 11400000, guid: caa16a2773ccdae47bea0bf73105d656, type: 2}
     animationClip:
       clip: {fileID: 7400000, guid: 9034090230bf66d4296e4b426831470d, type: 2}
   - Text: 'Eso ya lo veremos. '

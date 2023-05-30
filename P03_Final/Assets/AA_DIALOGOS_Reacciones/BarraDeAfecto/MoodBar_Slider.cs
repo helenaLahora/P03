@@ -12,10 +12,10 @@ public class MoodBar_Slider : MonoBehaviour
     {
 
     }
-
+    
     void Update()
     {
-        float AnimoNormalizado = _mood.fillImage.fillAmount / _mood.FelicidadMaxima;
+        float AnimoNormalizado = _mood._slider.value / _mood.FelicidadMaxima;
         _green.fillAmount = AnimoNormalizado;
 
     }

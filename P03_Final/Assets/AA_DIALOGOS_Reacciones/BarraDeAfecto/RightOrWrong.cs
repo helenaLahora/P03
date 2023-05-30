@@ -5,31 +5,24 @@ using UnityEngine.UI;
 
 public class RightOrWrong : MonoBehaviour
 {
-    public Animator _animatorNieve;
-    public Animator _animatorSelva;
+    
     public float _AfectionPoints = 0.1f;
     public GameObject other;
 
-    // Start is called before the first frame update
     private void Start()
     {
-        _animatorNieve = gameObject.GetComponent<Animator>();
-        _animatorSelva = gameObject.GetComponent<Animator>();
-
-        if (_animatorNieve.GetCurrentAnimatorStateInfo(0).IsName("Happy") || _animatorSelva.GetCurrentAnimatorStateInfo(0).IsName("Happy_Selva"))//
-        {
-            other.GetComponent<Mood_Player>().fillImage.fillAmount += _AfectionPoints;
-            Debug.Log("Suma +10");
-        }
-        else if (_animatorNieve.GetCurrentAnimatorStateInfo(0).IsName("Sad") || _animatorSelva.GetCurrentAnimatorStateInfo(0).IsName("Sad_Selva"))//
-        {
-            other.GetComponent<Mood_Player>().fillImage.fillAmount -= _AfectionPoints;
-            Debug.Log("Resta -10");
-        }
-        else
-        {
-            Debug.Log("NO FUNCIONAAAAAAAAAAAAAAA");
-        }
     }
-}
 
+    public void Sumar()
+    {
+        other.GetComponent<Mood_Player>()._slider.value += _AfectionPoints;
+        Debug.Log("Has ganado +10 puntos de afecto!");
+    }
+
+    public void Restart()
+    {
+        other.GetComponent<Mood_Player>()._slider.value -= _AfectionPoints;
+        Debug.Log("Has perdido -10 puntos de afecto!");
+    }
+
+}

@@ -11,24 +11,24 @@ public class Mood_Player : MonoBehaviour
 
     public void Start()
     {
-        fillImage.fillAmount = 0.5f;
+        _slider.value = 0.5f;
     }
 
     public void Update()
     {
-        fillImage.fillAmount = Mathf.Clamp(fillImage.fillAmount, 0, FelicidadMaxima);
+        _slider.value = Mathf.Clamp(_slider.value, 0, FelicidadMaxima);
 
-        if (fillImage.fillAmount > 0.5f && fillImage.fillAmount <= 1f)
+        if (_slider.value > 0.5f && _slider.value <= 1f)
         {
             fillImage.color = Color.green;
         }
 
-        if (fillImage.fillAmount > 0.3f && fillImage.fillAmount <= 0.5f)
+        if (_slider.value > 0.3f && _slider.value <= 0.5f)
         {
             fillImage.color = Color.yellow;
         }
 
-        if (fillImage.fillAmount <= 0.3f)
+        if (_slider.value <= 0.3f)
         {
             fillImage.color = Color.red;
         }

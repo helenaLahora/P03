@@ -12,10 +12,12 @@ public class DialogueNode : ScriptableObject
 [System.Serializable]
 public class DialogueOptions
 {
+
     public string Text;
     public DialogueNode NextNode;
-    public SerializedAnimationClip animationClip; 
-    
+    public SerializedAnimationClip animationClip;
+
+
 }
 
 [System.Serializable]

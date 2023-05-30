@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
-  m_Name: 2.1.2
+  m_Name: S2.1.1
   m_EditorClassIdentifier: 
-  Speech: "\xA1Genial! Muchas gracias, la verdad es que me haces un favor. Que tengas
-    un buen viaje."
+  Speech: Menuda lastima.
   Options:
-  - Text: END DIALOGUE >>
-    NextNode: {fileID: 11400000, guid: 36abaabf627720c40b63c36b6bcff234, type: 2}
+  - Text: END
+    NextNode: {fileID: 11400000, guid: 65a06ac88d5cf8647a10dd1615cb1d61, type: 2}
     animationClip:
-      clip: {fileID: 7400000, guid: 9e5d0b0a4e515ab4ba5808a6d8087bff, type: 2}
+      clip: {fileID: 0}
