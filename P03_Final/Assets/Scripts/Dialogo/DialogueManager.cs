@@ -17,6 +17,8 @@ public class DialogueManager : MonoBehaviour
 
     private GameObject _talker;
 
+
+
     void Awake()
     {
         if (Instance == null)
@@ -54,6 +56,8 @@ public class DialogueManager : MonoBehaviour
             {
                 Options[i].transform.parent.gameObject.SetActive(true);
                 Options[i].text = node.Options[i].Text;
+
+
             }
             else
             {

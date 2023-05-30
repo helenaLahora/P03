@@ -22,4 +22,5 @@ public class DialogueOptions
 public class SerializedAnimationClip
 {
     public AnimationClip clip;
+
 }

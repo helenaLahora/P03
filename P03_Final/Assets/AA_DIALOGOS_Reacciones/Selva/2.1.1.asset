@@ -17,4 +17,4 @@ MonoBehaviour:
   - Text: END DIALOGUE >>
     NextNode: {fileID: 11400000, guid: 36abaabf627720c40b63c36b6bcff234, type: 2}
     animationClip:
-      clip: {fileID: 0}
+      clip: {fileID: 7400000, guid: 9e5d0b0a4e515ab4ba5808a6d8087bff, type: 2}
