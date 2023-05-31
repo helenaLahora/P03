@@ -10,7 +10,6 @@ public class CicloDiaNoche : MonoBehaviour
     public Material skyboxDia; // Skybox para el día
     public Material skyboxNoche; // Skybox para la noche
     public Transform luna; // Transform de la luna
-    public Light luzLuna; // Luz de la luna
     public GameObject[] objetosEstrellas; // Array de objetos que actúan como estrellas
 
     private float rotacionActual; // Rotación actual del sol
@@ -42,9 +41,6 @@ public class CicloDiaNoche : MonoBehaviour
 
         // Ajustamos la intensidad de la luz solar
         luzSolar.intensity = 1f - Mathf.Abs(horaDelDia - 0.5f) * 2f;
-
-        // Ajustamos la intensidad de la luz de la luna
-        luzLuna.intensity = luzSolar.intensity * 0.3f;
 
         // Configuramos el skybox y los efectos atmosféricos
         EstablecerSkyboxYEfectosAtmosfericos();

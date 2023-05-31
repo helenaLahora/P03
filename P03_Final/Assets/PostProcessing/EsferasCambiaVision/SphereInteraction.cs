@@ -8,19 +8,19 @@ public class SphereInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("bonk"))
         {
             postProcessingController.SetIsTouchingSphere(true);
-            Debug.Log("Player entered the sphere trigger.");
+            Debug.Log("bonk entered the sphere trigger.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("bonk"))
         {
             postProcessingController.SetIsTouchingSphere(false);
-            Debug.Log("Player exited the sphere trigger.");
+            Debug.Log("bonk exited the sphere trigger.");
         }
     }
 }

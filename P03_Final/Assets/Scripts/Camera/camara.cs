@@ -1,142 +1,170 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class camara : MonoBehaviour
+public class ThirdPersonCamera : MonoBehaviour
 {
-    // ES CREEN TOTS ELS VALORS NECESSARIS PER A QUE APAREGUIN EN PANTALLA I ES PUGUIN MODIFICAR
-    public Transform player; //referencia del objecte d'escena que identifiquem com jugador.
+
+    public Transform parentTransform;   //the transform of the player or object you want the camera to focus on
+    float mouseOrgX;                   //screen x coordinate when middle mouse button is first pressed
+    float mouseOrgY;                   //screen y coordinate when middle mouse button is first pressed
+    public float rotSpeed;              //how fast the camera rotates around the focussed object
+    public int tolerance;               
+    public float zoomSpeed;             
+    Vector3 targToCamNoY;               //vector from the camera to the object of focus with y=0
+    float yAngle;                       
+    public float yAngleTol;             //the angle in degrees that the focus object to camera vector can be from the flat plane running throw the focus object's origin
+    float yCompOrg;
+    bool tooHigh;
+    bool tooLow;
+    Vector3 playerToCamera;
+    public float magAdjustment;       //controls how close a collider has to be to the back of the camera to justify turning of backwards zoom
+    bool allowZoomOut;
+    public int minZoomDist;
+    public int maxZoomDist;
     
-    public float mouseSensitivity = 2f; // directament proporcional a la sensibilitat que volem que tingui el ratol� per more la camara.
-    
-    float cameraVerticalRotation = 0f; //valor incial �s 0 perque el personatge miri recte al inciar el joc.
-    
-    bool toggleCamera = false;
 
-    private float ScrollSpeed = 10;
-
-
-    Vector3 posicionCamara = Vector3.zero;
-    Vector3 rotacion = new Vector3(20, 0, 0);
-
-    //AGAFEM ELS VALORS QUE NECESSITEM D'ALTRES SCRIPTS
-    Camera ZoomCamera;
-
-    [SerializeField]
-    InputSystem input;
-
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
-
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
-        // Bloquejar i amagar el cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        Vector3 rotacion = transform.localEulerAngles;
-
-        ZoomCamera = Camera.main;
-
+        mouseOrgX = 0;
+        mouseOrgY = 0;
+        tooHigh = false;
+        tooLow = false;
     }
-
 
     // Update is called once per frame
     void Update()
     {
-        if (Camera2() == true)
+
+
+        if (Input.GetMouseButtonDown(2))
         {
-            //si clica C se cambia el valor
-            toggleCamera = !toggleCamera;
+            mouseOrgX = Input.mousePosition.x;
+            mouseOrgY = Input.mousePosition.y;
         }
-
-        if (toggleCamera)
+        if (Input.GetMouseButton(2))
         {
-            //primera persona
-            rotateFirst();
-            firstPOV();
-            zoom();
-        }
 
-        else
+
+            //left right input/movement =======================================================================================
+            if (Input.mousePosition.x >= (mouseOrgX + tolerance)) //move right
+            {
+                gameObject.transform.Translate(Vector3.right * Time.deltaTime * rotSpeed, Space.Self);
+            }
+            else if (Input.mousePosition.x <= (mouseOrgX - tolerance)) //move left
+            {
+                gameObject.transform.Translate(Vector3.right * Time.deltaTime * -rotSpeed, Space.Self);
+            }
+            //========================================================================================================
+
+
+
+
+            //check to see if too high or low =============================================================
+            targToCamNoY = parentTransform.position - gameObject.transform.position;
+            yCompOrg = targToCamNoY.y;
+            targToCamNoY.y = 0;
+
+            yAngle = Vector3.Angle(targToCamNoY, parentTransform.position - gameObject.transform.position);
+            //Debug.Log("yAngle = " + yAngle + "yCompOrg = " + yCompOrg + " tooHigh = " + tooHigh + " tooLow = " + tooLow);
+            if (yAngle > yAngleTol && yCompOrg < 0) //too far up
+            {
+                tooHigh = true;
+            }
+            else if (yAngle > yAngleTol && yCompOrg > 0) //too far down
+            {
+                tooLow = true;
+            }
+            //=============================================================================================
+
+
+
+
+            //only listen to curtain input based on prior analysis==================================================
+            if (tooHigh) //if too high only listen to downward input
+            {
+                if ((Input.mousePosition.y <= (mouseOrgY - tolerance))) //down
+                {
+                    gameObject.transform.Translate(Vector3.up * Time.deltaTime * -rotSpeed, Space.Self);
+                }
+            }
+            else if (tooLow) // only listen to upward input
+            {
+                if ((Input.mousePosition.y >= (mouseOrgY + tolerance))) //up
+                {
+                    gameObject.transform.Translate(Vector3.up * Time.deltaTime * rotSpeed, Space.Self);
+                }
+            }
+            else //camera is not too high or too low so listen to both up and down input
+            {
+                if ((Input.mousePosition.y >= (mouseOrgY + tolerance))) //up
+                {
+                    gameObject.transform.Translate(Vector3.up * Time.deltaTime * rotSpeed, Space.Self);
+                }
+                else if ((Input.mousePosition.y <= (mouseOrgY - tolerance))) //down
+                {
+                    gameObject.transform.Translate(Vector3.up * Time.deltaTime * -rotSpeed, Space.Self);
+                }
+            }
+            //========================================================================================================
+
+
+
+
+            //check to see if camera is no longer too high or too low =======================================
+            targToCamNoY = parentTransform.position - gameObject.transform.position;
+            yCompOrg = targToCamNoY.y;
+            targToCamNoY.y = 0;
+
+            yAngle = Vector3.Angle(targToCamNoY, parentTransform.position - gameObject.transform.position);
+            if (yAngle <= yAngleTol - 4) //4 is arbitrary
+            {
+                tooHigh = false;
+                tooLow = false;
+            }
+            //===============================================================================================
+
+
+        } //end if(Input.GetMouseDown(2))
+
+
+        //zoom in/out =======================================================================================
+        playerToCamera = gameObject.transform.position - parentTransform.position;
+        if (Input.mouseScrollDelta.y > 0 && playerToCamera.magnitude >= minZoomDist) //zoom in
         {
-            transform.localEulerAngles = rotacion;
-            // tercera persona
-            thirdPOV();
-            zoom();
+            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * zoomSpeed, Space.Self);
         }
-    }
+        else if (Input.mouseScrollDelta.y < 0 && allowZoomOut && playerToCamera.magnitude <= maxZoomDist) //zoom out
+        {
+            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * -zoomSpeed, Space.Self);
+        }
+        //===================================================================================================
 
+        gameObject.transform.rotation = Quaternion.LookRotation(parentTransform.position - gameObject.transform.position, Vector3.up);
 
-//_________________________________________________________________________________________________________________________________________________________________________________________//
+    } //end update
 
-
-    private bool Camera2()
+    void FixedUpdate()
     {
-        return input.Controles_C; // S'ha apretat la tecla C? Doncs llavors correrà
-                                  // Control adquirit del SCRIPT InputSystem
-    }
-
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
-
-    void rotateFirst()
-    {
-        // REGISTRAR INFORMACI� D'INPUT
-        float inputX = Input.GetAxis("Mouse X") * mouseSensitivity; // registra el valor de l'eix x del ratolí, multiplicat per la sensibilitat a la variable.
-        float inputY = Input.GetAxis("Mouse Y"); // igual a l'anterior amb l'eix Y
-
-        // ROTAR LA C�MARA EN L'EIX X (moviment vertical)
-        cameraVerticalRotation -= inputY;
-
-        // s'utilitza - i no + perque quan mous el ratolí amunt obtens un valor positiu, pero per rotar la càmara amunt la rotació ha de ser negativa.
-        cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
+        RaycastHit hitInfo;
+        playerToCamera = gameObject.transform.position - parentTransform.position;
         
-        // limita el gir de la c�mara a -90 graus i 90 graus
-        transform.localRotation = Quaternion.Euler(cameraVerticalRotation, 0f, 0f);
+        //if a collider is blocking the line of sight of the camera snap the camera in front of the collider ...
+        if (Physics.Raycast(parentTransform.position, playerToCamera, out hitInfo, playerToCamera.magnitude)) 
+        {
+            gameObject.transform.position = hitInfo.point;
+        }
 
-        // ROTAR LA CÀMARA I EL JUGADOR EN L'EIX Y (moviment horitzontal)
-        // rotem la camara i el jugador
-        player.Rotate(Vector3.up * inputX);
-        transform.rotation = Quaternion.Euler(cameraVerticalRotation, player.eulerAngles.y, 0f);
+        //if a collider is too close to the backside of the camera, this prevents the user from zooming the camera out to keep the camera from jittering
+        if (Physics.Raycast(parentTransform.position, playerToCamera, out hitInfo, playerToCamera.magnitude + magAdjustment))
+        {
+            allowZoomOut = false;
+        }
+        else //the is no collider that is too close to the back of the camera
+        {
+            allowZoomOut = true;
+        }
+        
     }
-
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
-
-    void firstPOV()
-    {
-        // moure càmara a posició del player
-        posicionCamara = new Vector3(player.transform.position.x, player.transform.position.y + 3.2f, player.transform.position.z + 0.4f);
-        transform.position = posicionCamara;
-
-        //modificar la culling mask per no mostrar el personatge
-        this.GetComponent<Camera>().cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "Water", "UI", "Ground");
-    }
-
-    void thirdPOV()
-    {
-        // mover camara a posicion del player
-        posicionCamara = new Vector3(player.transform.position.x, player.transform.position.y + 4.5f, player.transform.position.z - 6f);
-        transform.position = posicionCamara;
-
-        //modificar la culling mask per no mostrar el personatge
-        this.GetComponent<Camera>().cullingMask = LayerMask.GetMask("Default", "TransparentFX", "Ignore Raycast", "Water", "UI", "Ground", "Player");
-    }
-
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
-
-    void zoom()
-    {
-        ZoomCamera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * ScrollSpeed;
-    }
-
-
 }
