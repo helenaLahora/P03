@@ -1,16 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; //ES MOLT NECESSARI POSAR AIX�
-                               // Serveix per a poder connectar el codi amb el InputSystem de Unity
 
 public class Movement : MonoBehaviour
 {
-    // ES CREEN TOTS ELS VALORS NECESSARIS PER A QUE APAREGUIN EN PANTALLA I ES PUGUIN MODIFICAR
     [SerializeField]
     float WalkingSpeed = 2.5f;
-   
+
     [SerializeField]
     float RunSpeed = 4f;
 
@@ -20,86 +14,70 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float smoothing_Air = 0.01f;
 
-
     public float _lastVelocity_Y;
     public float _lastVelocity_X;
     public float _lastVelocity_Z;
 
     public float _jumpspeed;
 
-    public Vector3 velocity = new Vector3(0, 0, 0); // Es crea el valor nou "velocity" que serà un Vector3
+    public Vector3 velocity = new Vector3(0, 0, 0);
 
     float Speed = 0;
 
-
-    //AGAFEM ELS VALORS QUE NECESSITEM D'ALTRES SCRIPTS
     [SerializeField]
-    InputSystem input; // IMPORTANT --> Ens conecta aquest script amb el SCRIPT InputSystem, per a poder agafar els inputs de moviment
+    InputSystem input;
 
     [SerializeField]
-    camara Camera;
+    public Camera playerCamera;
 
     [SerializeField]
     Salto saltito;
 
     PlayAnimation _playAnimation;
 
-    CharacterController _charactercontroler; // Creant una variable de tipus Character Controller
+    CharacterController _charactercontroler;
 
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
+    private Quaternion _smoothDampVelocity;
 
     private void FixedUpdate()
     {
-        Move(input.Controles_H, input.Controles_V); // Agafa els dos vectors que he transformat en OnMove() --> els valors dels vectors de x/y
-                                                    // Aquests vectors els agafem dels SCRIPT InputSystem
+        Move(input.Controles_H, input.Controles_V);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // El GetComponent agafa el Character Controller del personatge i comprova alhora de que està posat al personatge
         _charactercontroler = GetComponent<CharacterController>();
         _playAnimation = GetComponent<PlayAnimation>();
     }
 
-
-//_________________________________________________________________________________________________________________________________________________________________________________________//
-
-    public void Move(float horizontal, float vertical) // Agafem 
+    public void Move(float horizontal, float vertical)
     {
-        Speed = Run() ? RunSpeed : WalkingSpeed; // La velocitat és o walking speed o running speed segons si pitgem la tecla shift o no
+        Speed = Run() ? RunSpeed : WalkingSpeed;
 
+        Vector3 localInput = new Vector3(Speed * horizontal, 0, Speed * vertical);
 
-        Vector3 localInput = new Vector3(Speed * horizontal, 0, Speed * vertical); // Crees un Vector3 que ajunta tots els valors float en una sola variable
-
-        
-        float targetVelocity_x = localInput.x * Speed; // El que fa es crear una acceleració (que desprès fem servir pel smoothing)
+        float targetVelocity_x = localInput.x * Speed;
         float targetVelocity_z = localInput.z * Speed;
 
-        float smoothing = saltito.IsGrounded() ? smoothing_Ground : smoothing_Air; // Quan el personatge ESTÀ tocant el terra, s'assigna el smoothing de ground
-                                                                                  // Quan el personatge NO ESTÀ tocant el terra, s'assigna el smoothing del aire
+        float smoothing = saltito.IsGrounded() ? smoothing_Ground : smoothing_Air;
 
-        velocity.x = Mathf.Lerp(_lastVelocity_X, targetVelocity_x, smoothing); // Quan més gran sigui smoothing més lent anirà
+        velocity.x = Mathf.Lerp(_lastVelocity_X, targetVelocity_x, smoothing);
         velocity.y = saltito.GetVelocity();
         velocity.z = Mathf.Lerp(_lastVelocity_Z, targetVelocity_z, smoothing);
 
         if (velocity != Vector3.zero)
         {
-            _charactercontroler.Move(velocity * Time.deltaTime); // Time.deltaTime ---> Dona els valors de velocitat a velocity
+            _charactercontroler.Move(velocity * Time.deltaTime);
         }
 
         _lastVelocity_Y = velocity.y;
         _lastVelocity_X = velocity.x;
         _lastVelocity_Z = velocity.z;
 
-        if (localInput != Vector3.zero) // per corretgir el bug Look rotation viewing is zero, si el vector és 0 no fa res
+        if (localInput != Vector3.zero)
         {
-            //Funció de rotació que agafa l'input del moviment. Funció moviment - rotació.
-            Quaternion rotation = Quaternion.LookRotation(localInput);
-            //la component transform del personatge, agafes la rotació del personatge i li apliques la variable rotation creada anteriorment
-            transform.rotation = rotation;
+            Quaternion targetRotation = Quaternion.LookRotation(localInput);
+            transform.rotation = SmoothDampQuaternion(transform.rotation, targetRotation, ref _smoothDampVelocity, smoothing);
         }
 
         _jumpspeed = Mathf.Sqrt((velocity.x * velocity.x) + (velocity.z * velocity.z));
@@ -107,14 +85,23 @@ public class Movement : MonoBehaviour
         _playAnimation.setanimationmove(_jumpspeed);
     }
 
+    private Quaternion SmoothDampQuaternion(Quaternion current, Quaternion target, ref Quaternion currentVelocity, float smoothTime)
+    {
+        float smoothTimeClamped = Mathf.Max(0.0001f, smoothTime);
+        float maxSpeed = Mathf.Infinity;
+        float deltaTime = Time.deltaTime;
+        Quaternion result = Quaternion.identity;
 
- //_________________________________________________________________________________________________________________________________________________________________________________________//
+        result.x = Mathf.SmoothDamp(current.x, target.x, ref currentVelocity.x, smoothTimeClamped, maxSpeed, deltaTime);
+        result.y = Mathf.SmoothDamp(current.y, target.y, ref currentVelocity.y, smoothTimeClamped, maxSpeed, deltaTime);
+        result.z = Mathf.SmoothDamp(current.z, target.z, ref currentVelocity.z, smoothTimeClamped, maxSpeed, deltaTime);
+        result.w = Mathf.SmoothDamp(current.w, target.w, ref currentVelocity.w, smoothTimeClamped, maxSpeed, deltaTime);
 
+        return result.normalized;
+    }
 
-    //VOID PER PODER CORRER
     public bool Run()
     {
-        return input.Controles_R; // S'ha apretat la tecla shift? Doncs llavors correrà
-                                  // Control adquirit del SCRIPT InputSystem
+        return input.Controles_R;
     }
 }
