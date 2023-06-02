@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
   m_Name: D2_Hola
   m_EditorClassIdentifier: 
-  Speech: "Sab\xEDas que este mundo no es real y que est\xE1 creado y condicionado
-    por cinco estudiantes del grado de Multimedia y que tu solo eres un personaje
-    controlado para demostrar que todo funciona \xBFverdad?"
+  Speech: Bienvenido a las runas del desierto! Espero que el calor no resulte un
+    problema para ti mi peludo amigo
   Options:
-  - Text: "Em\u2026 \xBFestas bien? \xBFMucho sol? Porque me da que est\xE1s comenzando
-      a alucinar. \xBFQuieres que te mueva a la sombra? "
+  - Text: "No hay problema, no es como si fuera a quedarme mucho tiempo. Solo venia
+      a saludar \xA1Hasta la pr\xF3xima!"
     NextNode: {fileID: 11400000, guid: 2c65ff0b91cacc04eaf7a9fb343b8456, type: 2}
     animationClip:
       clip: {fileID: 0}
-  - Text: "Desde aqu\xED escucho como cae la cuarta pared. Por cierto, el Moai de
-      la selva te manda saludos."
+  - Text: "Por mi no hay problema, pero \xBFque tal estas tu? \xBFEst\xE1s bien?
+      \xBFDemasiado sol? \xBFQuieres una gorrita?"
     NextNode: {fileID: 11400000, guid: ab66846bb6e4ae84c954b574478e5b63, type: 2}
     animationClip:
       clip: {fileID: 0}

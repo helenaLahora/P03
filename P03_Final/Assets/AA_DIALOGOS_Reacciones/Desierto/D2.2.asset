@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
   m_Name: D2.2
   m_EditorClassIdentifier: 
-  Speech: "No hace falta majo/a. Estoy f\xF3sil pero todav\xEDa no alucino. Bueno,
-    ya puedes irte no tengo nada m\xE1s que decirte (a la que le toca hacer los di\xE1logos
-    se le est\xE1n acabando las ideas). "
+  Speech: "Oh, ya veo. Es una l\xE1stima que nuestra conversaci\xF3n haya sido breve,
+    ha sido un placer"
   Options:
   - Text: END
     NextNode: {fileID: 11400000, guid: 65a06ac88d5cf8647a10dd1615cb1d61, type: 2}

@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c5a4584e17e284fab7da4871a01594, type: 3}
   m_Name: D2.1
   m_EditorClassIdentifier: 
-  Speech: "As\xED que sigue con vida. Pens\xE9 que hab\xEDa desaparecido entre los
-    hierbajos que llama \u201Cjard\xEDn\u201D. En fin, ha sido un placer, ya puedes
-    irte por donde has venido majo/a."
+  Speech: "Jajajajaajaj, no hace falta majo! A estas alturas estoy acostumbrado al
+    calor. Espero que tu viaje de regreso sea llevadero. \xA1Adi\xF3s!"
   Options:
   - Text: END
     NextNode: {fileID: 11400000, guid: 65a06ac88d5cf8647a10dd1615cb1d61, type: 2}
